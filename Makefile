@@ -24,8 +24,8 @@ test-time-run:
 .PHONY: image-build
 image-build: .image-build
 .image-build: Dockerfile
-	docker build -t shogi-server/shogi-server:latest -f $< .
-	docker images -q shogi-server/shogi-server:latest > $@
+	docker build -t shogiserver/shogiserver:latest -f $< .
+	docker images -q shogiserver/shogiserver:latest > $@
 
 .PHONY: clean
 clean:
