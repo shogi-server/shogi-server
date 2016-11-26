@@ -5,6 +5,8 @@ require 'shogi_server/player'
 require 'shogi_server/login'
 require 'shogi_server/handicapped_boards'
 
+$options ||= {}
+
 class ShogiServer::BasicPlayer
   attr_accessor :protocol
 end
@@ -18,10 +20,21 @@ class TestLogin < Test::Unit::TestCase
     @p_x1.name = "hoge"
     @csa = ShogiServer::LoginCSA.new(@p_csa,"floodgate-900-0,xyz")
     @x1 = ShogiServer::Loginx1.new(@p_x1, "xyz")
+
+    $options["max-identifier"] = ShogiServer::Default_Max_Identifier_Length
   end
 
   def test_player_id
     assert(@p_x1.player_id == @p_csa.player_id)
+  end
+
+  def test_good_identifier
+    assert_true(ShogiServer::Login::good_identifier? "hoge")
+    assert_true(ShogiServer::Login::good_identifier? "12345678901234567890123456789012")
+
+    $options["max-identifier"] = 128
+    assert_true(ShogiServer::Login::good_identifier? "0"*128)
+    assert_false(ShogiServer::Login::good_identifier? "0"*129)
   end
 
   def test_login_factory_x1
@@ -97,7 +110,7 @@ class TestLogin < Test::Unit::TestCase
     assert_equal("floodgate-900-0", login.gamename)
   end
 
-  def test_login_factory_csa_with_white
+  def test_login_factory_csa_with_white_fischer
     player = ShogiServer::BasicPlayer.new
     player.name = "hoge"
     login = ShogiServer::Login::factory("LOGIN hoge floodgate-900-10F-W,xyz", player)

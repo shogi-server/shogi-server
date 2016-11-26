@@ -45,14 +45,14 @@ require 'shogi_server/buoy'
 
 module ShogiServer # for a namespace
 
-Max_Identifier_Length = 32
+Default_Max_Identifier_Length = 32
 Default_Timeout = 60            # for single socket operation
 Default_Game_Name = "default-1500-0"
 Default_Max_Moves = 256
 Default_Least_Time_Per_Move = 0
 One_Time = 10
 Login_Time = 300                # time for LOGIN
-Revision = "20160409"
+Revision = "20161126"
 
 RELOAD_FILES = ["shogi_server/league/floodgate.rb",
                 "shogi_server/league/persistent.rb",

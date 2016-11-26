@@ -1,3 +1,13 @@
+2016-11-26  Daigo Moriwaki <daigo at debian dot org>
+
+	* [shogi-server] Allow to customize maximum lenght of a login indentifier
+	  (Closes #36821)
+	  - The current maximum length of a login identifier is 32. Some
+	    private uses require longer player names to distinguish each other
+	    by specifying randomly generated tokens. It would of help to add a
+	    new command line option --max-identifier to overwrite the default
+	    maximum length.
+
 2016-04-09  Daigo Moriwaki <daigo at debian dot org>
 
 	* utils/eval_graph.rb
