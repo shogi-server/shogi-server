@@ -7,6 +7,12 @@
 	    by specifying randomly generated tokens. It would of help to add a
 	    new command line option --max-identifier to overwrite the default
 	    maximum length.
+	* Build a Docker image for Shogi-server
+	  (Closes #36822)
+	  - Build a Docker image
+	      % make image-build
+	  - Running a local shogi-server would look like
+	      % docker run -p 4081:4081 -v `pwd`/logs:/logs shogi-server/shogi-server
 
 2016-04-09  Daigo Moriwaki <daigo at debian dot org>
 
