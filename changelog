@@ -1,3 +1,11 @@
+2016-12-09  Daigo Moriwaki <daigo at debian dot org>
+
+	* Allow util/statistics.rb to set a filtering condition of found files
+	  Regarding util/statistics.rb, add a new command line option,
+	  --filter regexp, to process files that are matched with a regexp.
+	  It would make it easier to calculate statistics of certain games.
+	  (Closes #36855)
+
 2016-11-26  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Allow to customize maximum lenght of a login indentifier
