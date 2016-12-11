@@ -21,6 +21,12 @@ stop-daemon:
 test-time-run: 
 	ruby -r sample/test_time.rb ./shogi-server --floodgate-games floodgate-900-0,floodgate-3600-0 hoge 4000 
 
+.PHONY: image-build
+image-build: .image-build
+.image-build: Dockerfile
+	docker build -t shogiserver/shogiserver:latest -f $< .
+	docker images -q shogiserver/shogiserver:latest > $@
+
 .PHONY: clean
 clean:
-	-rm -rf doc
+	-rm -rf doc .image-*

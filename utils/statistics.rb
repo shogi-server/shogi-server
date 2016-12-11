@@ -139,21 +139,40 @@ end
 
 if $0 == __FILE__
   def usage
-    puts "Usage: #{$0} [OPTIONS] dir [...]"
-    puts "Options:"
+puts <<-EOF
+SYNOPSIS:
+    #{$0} [OPTION]... file or dir [...]
+
+DESCRIPTION:
+    It calculates game statistics, reading CSA record files.
+    If an argument is a directory, it attempts to find files in its
+    subdirectories recursively.
+
+    --filter regexp
+        only files that are matched with a regexp are processed (default: no filter)
+
+    --repeat n
+        at most n files are processed (default: unlimitted)
+EOF
     exit 1
   end
 
   usage if ARGV.empty?
 
   parser = GetoptLong.new(
-             ['--repeat', '-n', GetoptLong::REQUIRED_ARGUMENT]
+             ['--repeat', '-n', GetoptLong::REQUIRED_ARGUMENT],
+             ['--filter', GetoptLong::REQUIRED_ARGUMENT],
+             ['--h', '-h', GetoptLong::NO_ARGUMENT]
            )
   begin
     parser.each_option do |name, arg|
       eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
     end
   rescue
+    usage
+  end
+
+  if $OPT_H
     usage
   end
 
@@ -167,11 +186,15 @@ if $0 == __FILE__
     if FileTest.directory?(cmd)
       Dir.glob(File.join(cmd, "**", "*.csa")).each do |file|
         break if $OPT_REPEAT == 0
-        do_file(file)
+        if $OPT_FILTER.nil? || /#{$OPT_FILTER}/ =~ file
+          do_file(file)
+        end
       end
     elsif FileTest.file?(cmd)
       break if $OPT_REPEAT == 0
-      do_file(cmd)
+      if $OPT_FILTER.nil? || /#{$OPT_FILTER}/ =~ cmd
+        do_file(cmd)
+      end
     else
       throw "Unknown file or directory: #{cmd}"
     end

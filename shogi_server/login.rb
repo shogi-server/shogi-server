@@ -79,7 +79,8 @@ class Login
   end
 
   def Login.good_identifier?(str)
-    if str =~ /\A[\w@\-\.]{1,#{Max_Identifier_Length}}\z/
+    max = $options["max-identifier"]
+    if str =~ /\A[\w@\-\.]{1,#{max}}\z/
       return true
     else
       return false

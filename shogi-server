@@ -82,6 +82,8 @@ OPTIONS
                 Least time in second per move: 0, 1 (default 1).
                   - 0: The new rule that CSA introduced in November 2014.
                   - 1: The old rule before it.
+        --max-identifier n
+	        maximum length of an identifier
         --max-moves n
                 when a game with the n-th move played does not end, make the game a draw.
                 Default 256. 0 disables this feature.
@@ -206,6 +208,7 @@ def parse_command_line
     ["--daemon",              GetoptLong::REQUIRED_ARGUMENT],
     ["--floodgate-games",     GetoptLong::REQUIRED_ARGUMENT],
     ["--least-time-per-move", GetoptLong::REQUIRED_ARGUMENT],
+    ["--max-identifier",      GetoptLong::REQUIRED_ARGUMENT],
     ["--max-moves",           GetoptLong::REQUIRED_ARGUMENT],
     ["--pid-file",            GetoptLong::REQUIRED_ARGUMENT],
     ["--player-log-dir",      GetoptLong::REQUIRED_ARGUMENT])
@@ -280,6 +283,9 @@ def check_command_line
 
   $options["max-moves"] ||= ShogiServer::Default_Max_Moves
   $options["max-moves"] = $options["max-moves"].to_i
+
+  $options["max-identifier"] ||= ShogiServer::Default_Max_Identifier_Length
+  $options["max-identifier"] = $options["max-identifier"].to_i
 
   $options["least-time-per-move"] ||= ShogiServer::Default_Least_Time_Per_Move
   $options["least-time-per-move"] = $options["least-time-per-move"].to_i
