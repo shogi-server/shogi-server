@@ -1,6 +1,7 @@
 2016-12-11  Daigo Moriwaki <daigo at debian dot org>
 
 	* Update Revision to 20161211.
+	* Fix Dockerfile.
 
 2016-12-09  Daigo Moriwaki <daigo at debian dot org>
 

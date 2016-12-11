@@ -11,7 +11,6 @@ ENV PORT 4081
 ENV MAX_IDENTIFIER 32
 
 WORKDIR /shogi-server
-RUN mkdir $WORKDIR
 RUN mkdir /logs
 
 COPY . ./
