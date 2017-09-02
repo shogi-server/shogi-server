@@ -672,7 +672,7 @@ def parse(line)
   end
   $history.add line
 
-  time, state, black_mark, black_id, white_id, white_mark, file = line.split("\t")
+  time, state, black_mark, black_id, white_id, white_mark, file, moves = line.split("\t")
   unless time && state && black_mark && black_id &&
          white_id && white_mark && file
     $stderr.puts "Failed to parse the line : #{line}"
