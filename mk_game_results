@@ -65,14 +65,14 @@ def grep(file)
     str = File.open(file, "r").read
   end
 
-    black_name = ""
-    black_mark = ""
-    black_id = ""
-    white_name = ""
-    white_mark = ""
-    white_id = ""
-    state = ""
-    time = ""
+    black_name = nil
+    black_mark = nil
+    black_id = nil
+    white_name = nil
+    white_mark = nil
+    white_id = nil
+    state = nil
+    time = nil
     moves = 0
     str.each_line do |line|
         line.strip!
