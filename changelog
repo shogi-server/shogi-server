@@ -5,6 +5,11 @@
 	  "%SENNICHITE" are now recorded in CSA files when a game ends for
 	  timed up or sennichite respectively.
 	  (Closes #37490)
+	* [shogi-server] [mk_game_results] Change schema to add number of
+	  moves The format of an internal game result summary file, '00LIST',
+	  has been changed to add number of moves of a game, which would be of
+	  help for a script calculating rating scores.
+	  (Closes #37491)
 
 2017-02-26 Daigo Moriwaki <daigo at debian dot org>
 

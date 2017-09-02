@@ -52,7 +52,8 @@ class LoggingObserver
            black_name,
            white_name,
            game_result.white_result,
-           game_result.game.logfile]
+           game_result.game.logfile,
+	   game_result.game.board.move_count]
     begin
       # Note that this is proccessed in the gian lock.
       File.open(@logfile, "a") do |f|
