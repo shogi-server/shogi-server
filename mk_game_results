@@ -47,13 +47,14 @@
 require 'getoptlong'
 
 # Parse a CSA file. A tab-delimited line format is
-#   time  state  black_mark  black_id  white_id  white_mark  filepath 
+#   time  state  black_mark  black_id  white_id  white_mark  filepath  moves
 # time:: YYYY/MM/DD hh:mm:ss
 # black_mark:: win lose draw
 # black_id::   black player's id
 # white_mark:: win lose draw
 # white_id::   white player's id
 # filepath::   absolute file path
+# moves:: number of moves
 #
 # @parameter file an absolute path of a csa file
 #
@@ -64,36 +65,49 @@ def grep(file)
     str = File.open(file, "r").read
   end
 
-  if /^N\+(.*)$/ =~ str then black_name = $1.strip end
-  if /^N\-(.*)$/ =~ str then white_name = $1.strip end
+    black_name = ""
+    black_mark = ""
+    black_id = ""
+    white_name = ""
+    white_mark = ""
+    white_id = ""
+    state = ""
+    time = ""
+    moves = 0
+    str.each_line do |line|
+        line.strip!
+        case line
+            when /^[\+\-]\d{4}\w{2}.*$/
+                moves += 1
+      when /^N\+(.*)$/
+                black_name = $1.strip
+      when /^N\-(.*)$/
+                white_name = $1.strip
+      when /^'summary:(.*)$/
+        state, p1, p2 = $1.split(":").map {|a| a.strip}
+        p1_name, p1_mark = p1.split(" ")
+        p2_name, p2_mark = p2.split(" ")
+        if p1_name == black_name
+          black_name, black_mark = p1_name, p1_mark
+          white_name, white_mark = p2_name, p2_mark
+        elsif p2_name == black_name
+          black_name, black_mark = p2_name, p2_mark
+          white_name, white_mark = p1_name, p1_mark
+        else
+          raise "Never reach!: #{black_name}, #{p1}, #{p2} in #{file}"
+        end
+      when /^'\$END_TIME:(.*)$/
+        time = $1.strip
+      when /^'rating:(.*)$/
+        black_id, white_id = $1.split(":").map {|a| a.strip}
+    end # case
+    end # do line
 
-  if /^'summary:(.*)$/ =~ str
-    state, p1, p2 = $1.split(":").map {|a| a.strip}    
-    p1_name, p1_mark = p1.split(" ")
-    p2_name, p2_mark = p2.split(" ")
-    if p1_name == black_name
-      black_name, black_mark = p1_name, p1_mark
-      white_name, white_mark = p2_name, p2_mark
-    elsif p2_name == black_name
-      black_name, black_mark = p2_name, p2_mark
-      white_name, white_mark = p1_name, p1_mark
-    else
-      raise "Never reach!: #{black} #{white} #{p3} #{p2}"
-    end
+  if black_id && white_id && (black_id != white_id) &&
+     black_mark && white_mark && state && time
+    puts [time, state, black_mark, black_id, white_id, white_mark, file, moves].join("\t")
+    $stdout.flush
   end
-
-  if /^'\$END_TIME:(.*)$/ =~ str
-    time = $1.strip
-  end
-
-  if /^'rating:(.*)$/ =~ str
-    black_id, white_id = $1.split(":").map {|a| a.strip}
-    if black_id && white_id && (black_id != white_id) &&
-       black_mark && white_mark && state && time
-      puts [time, state, black_mark, black_id, white_id, white_mark, file].join("\t")
-    end
-  end
-  $stdout.flush
 end
 
 # Show Usage
@@ -144,4 +158,4 @@ if __FILE__ == $0
   main
 end
 
-# vim: ts=2 sw=2 sts=0
+# vim: tabstop=4 shiftwidth=4 expandtab

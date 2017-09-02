@@ -5,7 +5,7 @@
 # you will see such files under the some_dir directory.
 #
 # Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2006-2012 Daigo Moriwaki <daigo at debian dot org>
+# Copyright:: Copyright (C) 2006-2017 Daigo Moriwaki <daigo at debian dot org>
 #
 # $Id$
 #
@@ -77,20 +77,18 @@ class CsaFileReader
     if /^'\$END_TIME:(.*)$/ =~ @str
       @end_time = Time.parse($1.strip)
     end
-    if /^'rating:(.*)$/ =~ @str
-      black_id, white_id = $1.split(":").map {|a| a.strip}
+    if /^'summary:.*?:(.*)$/ =~ @str
+      black_id, bresult, white_id, wresult = $1.split(":").map {|a| a.strip.split(" ")}.flatten
       @black_id = identify_id(black_id)
       @white_id = identify_id(white_id)
-      if @black_id && @white_id && (@black_id != @white_id) &&
-         @black_mark && @white_mark
+      if @black_id && @white_id
         if black_mark == WIN_MARK && white_mark == LOSS_MARK
           @winner, @loser = @black_id, @white_id
         elsif black_mark == LOSS_MARK && white_mark == WIN_MARK
           @winner, @loser = @white_id, @black_id
-        elsif black_mark == DRAW_MARK && white_mark == DRAW_MARK
+	else
+          # draw or errors
           @winner, @loser = nil, nil
-        else
-          raise "Never reached!"
         end
       end
     end
@@ -135,6 +133,8 @@ if $0 == __FILE__
     puts "  --players player_a,player_b  select games of the player_a vs the player_b"
     puts "  --black player               select games of which the player is Black"
     puts "  --white player               select games of which the player is White"
+    puts "  --winner player              select games that the player won"
+    puts "  --loser player               select games that the player lose"
     exit 1
   end
 
@@ -143,7 +143,9 @@ if $0 == __FILE__
   parser = GetoptLong.new(
              ['--black',   GetoptLong::REQUIRED_ARGUMENT],
              ['--white',   GetoptLong::REQUIRED_ARGUMENT],
-             ['--players', GetoptLong::REQUIRED_ARGUMENT]
+             ['--players', GetoptLong::REQUIRED_ARGUMENT],
+             ['--winner',  GetoptLong::REQUIRED_ARGUMENT],
+             ['--loser',   GetoptLong::REQUIRED_ARGUMENT]
            )
   begin
     parser.each_option do |name, arg|
@@ -175,6 +177,14 @@ if $0 == __FILE__
       if $OPT_WHITE
         next unless csa.white_id.downcase.index($OPT_WHITE.downcase) == 0
       end
+
+      if $OPT_WINNER
+        next unless csa.winner && csa.winner.downcase.index($OPT_WINNER.downcase) == 0
+      end
+      if $OPT_LOSER
+        next unless csa.loser && csa.loser.downcase.index($OPT_LOSER.downcase) == 0
+      end
+
       puts csa.file_name
     end
   end
