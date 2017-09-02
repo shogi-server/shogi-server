@@ -1,3 +1,11 @@
+2017-09-02  Daigo Moriwaki <daigo at debian dot org>
+
+	* [shogi-server] Write more game results in record files
+	  As the CSA Record Format standard states, "%TIME_UP" and
+	  "%SENNICHITE" are now recorded in CSA files when a game ends for
+	  timed up or sennichite respectively.
+	  (Closes #37490)
+
 2017-02-26 Daigo Moriwaki <daigo at debian dot org>
 
 	* utils/csa-filter.rb: Allow csa-filter.rb to filter games by a winner or loser

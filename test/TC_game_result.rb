@@ -10,12 +10,20 @@ $league.event = "TC_game_result"
 module ShogiServer
   class BasicPlayer
     attr_accessor :sente, :status
+
+    def write_safe(dummy)
+    end
   end
 end
 
 class TestGameResult < Test::Unit::TestCase
   class DummyGame
     attr_accessor :game_name
+    attr_reader :board
+
+    def initialize
+      @board = ""
+    end
   end
 
   def setup
@@ -105,10 +113,28 @@ class TestGameResult < Test::Unit::TestCase
 
   def test_game_result_sennichite_draw
     gr = ShogiServer::GameResultSennichiteDraw.new(@game, @p1, @p2)
+    $cache_state = []
+    def gr.log(s)
+      $cache_state << s
+    end
     assert_equal(@p1.last_game_win, false)
     assert_equal(@p2.last_game_win, false)
     assert_equal("sennichite", gr.log_summary_type)
+
+    gr.delete_observers
+    gr.process
+    assert_equal("%SENNICHITE", $cache_state[0])
   end
 
+  def test_game_result_timeout
+    gr = ShogiServer::GameResultTimeoutWin.new(@game, @p2, @p1)
+    $cache_state = []
+    def gr.log(s)
+      $cache_state << s
+    end
+    gr.delete_observers
+    gr.process
+    assert_equal("%TIME_UP", $cache_state[0])
+  end
 end
 

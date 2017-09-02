@@ -194,7 +194,7 @@ class GameResultTimeoutWin < GameResultWin
   def process
     @winner.write_safe("#TIME_UP\n#WIN\n")
     @loser.write_safe( "#TIME_UP\n#LOSE\n")
-    # no log
+    log("%TIME_UP")  # a player in turn lost
     log_summary
     notify
   end
@@ -337,7 +337,7 @@ class GameResultSennichiteDraw < GameResultDraw
     @players.each do |player|
       player.write_safe("#SENNICHITE\n#DRAW\n")
     end
-    # no log
+    log("%SENNICHITE")
     log_summary
     notify
   end
