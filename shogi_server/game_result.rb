@@ -37,7 +37,9 @@ end
 #
 class LoggingObserver
   def initialize
-    @logfile = File.join($league.dir, "00LIST")
+    @logfile           = File.join($league.dir, "00LIST")
+    @logfile_floodgate = File.join($league.dir, "00LIST.floodgate")
+    @logfile_others    = File.join($league.dir, "00LIST.others")
   end
 
   def update(game_result)
@@ -55,9 +57,18 @@ class LoggingObserver
            game_result.game.logfile,
 	   game_result.game.board.move_count]
     begin
+      files = [@logfile]
+      if League::Floodgate.game_name?(game_result.game.game_name)
+	files << @logfile_floodgate
+      else
+	files << @logfile_others
+      end
       # Note that this is proccessed in the gian lock.
-      File.open(@logfile, "a") do |f|
-        f << msg.join("\t") << "\n"
+      str = msg.join("\t")
+      files.each do |file|
+        File.open(file, "a") do |f|
+	  f.puts str
+        end
       end
     rescue => e
       # ignore
