@@ -1,3 +1,13 @@
+2017-09-03  Daigo Moriwaki <daigo at debian dot org>
+
+	* [shogi-server] Write game results in categorical files
+	  The shogi-server now writes down game results in the following
+	  files, depending on a game class:
+	  - 00LIST: all games
+	  - 00LIST.floodgate: floodgate games
+	  - 00LIST.others: non-floodgate games
+	  (Closes  #37492)
+
 2017-09-02  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Write more game results in record files
