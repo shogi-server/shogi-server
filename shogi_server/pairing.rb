@@ -496,6 +496,11 @@ module ShogiServer
             (history.last_opponent(p1.player_id) == p2.player_id ||
              history.last_opponent(p2.player_id) == p1.player_id))
           ret += 400
+	  if p1.estimated_rate != 0 || p2.estimated_rate != 0
+	     # unrated players should make games with various players.
+             very_large = 4000
+	     ret += very_large
+	  end
         end
 
         # 2.2 Human vs Human

@@ -1,3 +1,9 @@
+2018-04-07  Daigo Moriwaki <daigo at debian dot org>
+
+	* [shogi-server] Give more penalty on assigning matches with same
+	  players.
+	  (Closes #38178)
+
 2017-09-03  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Write game results in categorical files

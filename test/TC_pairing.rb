@@ -424,6 +424,11 @@ class TestLeastDiff < Test::Unit::TestCase
     @abcdxyz.name = "abcdxyz"
     @abcdxyz.rate = 2300
 
+    @unrated = ShogiServer::BasicPlayer.new
+    @unrated.player_id = "unrated"
+    @unrated.name = "unrated"
+    @unrated.estimated_rate = 450
+
     $league.add(@a)
     $league.add(@b)
     $league.add(@c)
@@ -578,6 +583,32 @@ class TestLeastDiff < Test::Unit::TestCase
   def test_calculate_diff_with_kin_7_players
     players = [@abcdefg1, @abcdefg2]
     assert_equal(@abcdefg2.rate - @abcdefg1.rate + 800, @pairing.calculate_diff_with_penalty(players,nil))
+  end
+
+  def test_calculate_diff_with_unrated_player
+    players = [@unrated, @a]
+    dummy = nil
+    def @history.make_record(game_result)
+      {:game_id => "wdoor+floodgate-900-0-a-unrated-1",
+       :black => "a",  :white => "unrated",
+       :winner => "unrated", :loser => "a"}
+    end
+    @history.update(dummy)
+    assert_equal(4000 + 400 + (@a.rate - @unrated.estimated_rate).abs,
+		@pairing.calculate_diff_with_penalty(players,@history))
+  end
+
+  def test_calculate_diff_with_unrated_player_2
+    players = [@a, @unrated]
+    dummy = nil
+    def @history.make_record(game_result)
+      {:game_id => "wdoor+floodgate-900-0-a-unrated-1",
+       :black => "a",  :white => "unrated",
+       :winner => "unrated", :loser => "a"}
+    end
+    @history.update(dummy)
+    assert_equal(4000 + 400 + (@a.rate - @unrated.estimated_rate).abs,
+		@pairing.calculate_diff_with_penalty(players,@history))
   end
 
   def test_get_player_rate_0
