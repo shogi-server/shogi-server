@@ -28,6 +28,7 @@ require 'digest/md5'
 require 'webrick'
 require 'fileutils'
 require 'logger'
+require 'pathname'
 
 require 'shogi_server/compatible'
 require 'shogi_server/board'
@@ -58,6 +59,7 @@ RELOAD_FILES = ["shogi_server/league/floodgate.rb",
                 "shogi_server/league/persistent.rb",
                 "shogi_server/pairing.rb"]
 BASE_DIR = File.expand_path(File.dirname(__FILE__))
+STOP_FILE = Pathname.new(BASE_DIR).join("STOP")
 
 def reload
   RELOAD_FILES.each do |f|
@@ -65,6 +67,13 @@ def reload
   end
 end
 module_function :reload
+
+##
+# When the STOP file exists, starting a new game is not allowed.
+def available?
+   return !STOP_FILE.exist?
+end
+module_function :available?
 
 class Logger < ::Logger
 

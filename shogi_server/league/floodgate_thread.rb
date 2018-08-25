@@ -103,7 +103,11 @@ module ShogiServer
 
             next_instances = leagues.collect do |fg|
               unless (fg.next_time - Time.now) > 0
-                start_games(fg)
+                if ShogiServer::available?
+                  start_games(fg)
+		else
+                  log_message("The STOP file prevents from starting new Floodgate matches")
+		end
                 fg.charge # updates next_time
               end
               fg

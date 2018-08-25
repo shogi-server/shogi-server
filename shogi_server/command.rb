@@ -497,7 +497,10 @@ module ShogiServer
     end
 
     def call
-      if (! Login::good_game_name?(@game_name))
+      if (!ShogiServer::available?)
+	@player.write_safe("##[ERROR] As the service is going to shutdown shortly, starting new games is not allowed now.\n")
+        return :continue
+      elsif (! Login::good_game_name?(@game_name))
         @player.write_safe(sprintf("##[ERROR] bad game name: %s.\n", @game_name))
         if (/^(.+)-\d+-\d+F?$/ =~ @game_name)
           if Login::good_identifier?($1)

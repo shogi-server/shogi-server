@@ -123,6 +123,21 @@ EXAMPLES
            floodgate-0-240.conf.sample or shogi_server/league/floodgate.rb 
            for format details.
 
+GRACEFUL SHUTDOWN
+
+	A file named "STOP" in the base directory prevents the server from
+	starting new games including Floodgate matches.
+	When you want to stop the server gracefully, first, create a STOP file
+
+          $ touch STOP
+
+	then wait for a while until all the running games complete.
+	Now you can stop the process with no game interruptted by the 'kill'
+	command.
+
+	Note that when a server gets started, a STOP file, if any, will be
+	deleted automatically.
+
 FLOODGATE SCHEDULE CONFIGURATIONS
 
 	    You need to set starting times of floodgate groups in
@@ -457,6 +472,11 @@ def main
   end
   $stderr.puts("server started as a deamon [Revision: #{ShogiServer::Revision}]") if $options["daemon"] 
   log_message("server started [Revision: #{ShogiServer::Revision}]")
+
+  if ShogiServer::STOP_FILE.exist?
+    log_message("Deleted the STOP file")
+    ShogiServer::STOP_FILE.delete
+  end
 
   server.start do |client|
     begin
