@@ -4,6 +4,10 @@
 	  A file named "STOP" in the base directory prevents the server from
 	  starting new games including Floodgate matches.
 	  (Closes #38544)
+	* [shogi-server] Create a directory for a PID file.
+	  To put a PID file such as /var/run/shogi-server/shogi-server.pid, if
+	  directories do not exist, they will be created recursively.
+	  (Closes #38546)
 
 2018-04-07  Daigo Moriwaki <daigo at debian dot org>
 

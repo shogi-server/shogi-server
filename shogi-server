@@ -34,6 +34,7 @@ require 'shogi_server'
 require 'shogi_server/config'
 require 'shogi_server/util'
 require 'shogi_server/league/floodgate_thread.rb'
+require 'pathname'
 require 'tempfile'
 
 #################################################
@@ -271,6 +272,8 @@ def check_command_line
 
   if $options["pid-file"] 
     $options["pid-file"] = File.expand_path($options["pid-file"], $topdir)
+    path = Pathname.new($options["pid-file"])
+    path.dirname().mkpath()
     unless ShogiServer::is_writable_file? $options["pid-file"]
       usage
       $stderr.puts "Can not create the pid file: %s" % [$options["pid-file"]]
