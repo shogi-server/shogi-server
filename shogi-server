@@ -34,6 +34,8 @@ require 'shogi_server'
 require 'shogi_server/config'
 require 'shogi_server/util'
 require 'shogi_server/league/floodgate_thread.rb'
+require 'pathname'
+require 'set'
 require 'tempfile'
 
 #################################################
@@ -271,6 +273,8 @@ def check_command_line
 
   if $options["pid-file"] 
     $options["pid-file"] = File.expand_path($options["pid-file"], $topdir)
+    path = Pathname.new($options["pid-file"])
+    path.dirname().mkpath()
     unless ShogiServer::is_writable_file? $options["pid-file"]
       usage
       $stderr.puts "Can not create the pid file: %s" % [$options["pid-file"]]
@@ -432,6 +436,9 @@ def main
 
   $league.dir = $topdir
 
+  # Set of connected players
+  $players = Set.new
+
   config = {}
   config[:BindAddress] = "0.0.0.0"
   config[:Port]       = port
@@ -459,8 +466,9 @@ def main
 
   srand
   server = WEBrick::GenericServer.new(config)
-  ["INT", "TERM"].each do |signal| 
+  ["INT", "TERM"].each do |signal|
     trap(signal) do
+      $players.each {|p| p.kill}
       server.shutdown
       setup_floodgate.kill
     end
@@ -492,6 +500,14 @@ def main
       log_message(sprintf("user %s login", player.name))
       login.process
       player.setup_logger($options["player-log-dir"]) if $options["player-log-dir"]
+
+      $mutex.lock
+      begin
+	$players.add(player)
+      ensure
+        $mutex.unlock
+      end
+
       player.run(login.csa_1st_str) # loop
       $mutex.lock
       begin
@@ -501,6 +517,7 @@ def main
         player.finish
         $league.delete(player)
         log_message(sprintf("user %s logout", player.name))
+	$players.delete(player)
       ensure
         $mutex.unlock
       end
