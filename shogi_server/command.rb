@@ -27,13 +27,11 @@ module ShogiServer
     #
     def Command.factory(str, player, time=Time.now)
       cmd = nil
-      case str 
-      when "" 
-        cmd = KeepAliveCommand.new(str, player)
+      case str
+      when "", /^%[^%]/, :timeout
+        cmd = SpecialCommand.new(str, player)
       when /^[\+\-][^%]/
         cmd = MoveCommand.new(str, player)
-      when /^%[^%]/, :timeout
-        cmd = SpecialCommand.new(str, player)
       when :exception
         cmd = ExceptionCommand.new(str, player)
       when /^REJECT/
@@ -145,22 +143,6 @@ module ShogiServer
     end
   end
 
-  # Application-level protocol for Keep-Alive.
-  # If the server receives an LF, it sends back an LF.  Note that the 30 sec
-  # rule (client may not send LF again within 30 sec) is not implemented
-  # yet.
-  #
-  class KeepAliveCommand < Command
-    def initialize(str, player)
-      super
-    end
-
-    def call
-      @player.write_safe("\n")
-      return :continue
-    end
-  end
-
   # Command of moving a piece.
   #
   class MoveCommand < Command
@@ -190,7 +172,11 @@ module ShogiServer
     end
   end
 
-  # Command like "%TORYO" or :timeout
+  # Command like "%TORYO", :timeout, or keep alive
+  #
+  # Keep Alive is an application-level protocol. Whenever the server receives
+  # an LF, it sends back an LF.  Note that the 30 sec rule (client may not send
+  # LF again within 30 sec) is not implemented yet.
   #
   class SpecialCommand < Command
     def initialize(str, player)
@@ -199,6 +185,14 @@ module ShogiServer
 
     def call
       rc = :continue
+
+      if @str == "" # keep alive
+        log_debug("received keep alive from #{@player.name}")
+        @player.write_safe("\n")
+        # Fall back to :timeout to check the game gets timed up
+        @str = :timeout
+      end
+
       if (@player.status == "game")
         rc = in_game_status()
       elsif ["agree_waiting", "start_waiting"].include?(@player.status) 

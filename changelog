@@ -1,3 +1,14 @@
+2020-10-04  Daigo Moriwaki <daigo at debian dot org>
+
+	* [shogi-server] Improve timed-up detection.
+	  Previously, the server checked if a game got timed up when a player
+	  in turn sent no message for a certain amount of time mainly defined
+	  by Default_Timeout. If the player sent keep alive frequently, the
+	  timed-up detection could be quite delayed.
+	  This issue has been addressed. The server now checks timed up with
+	  keep alive received as well. Players are notified with TIME_UP not
+	  long before games gets timed up.
+
 2018-08-25  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Support a graceful shutdown.
