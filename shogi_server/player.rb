@@ -301,7 +301,8 @@ class Player < BasicPlayer
           @socket_buffer << str
           str = @socket_buffer.shift
         end
-        log_debug("%s (%s)" % [str, @socket_buffer.map {|a| String === a ? a.strip : a }.join(",")])
+        log_debug("dump socket buffer: '%s' (%s)" % [String === str ? str.strip : str,
+                                                    @socket_buffer.map {|a| String === a ? a.strip : a }.join(",")])
 
         if (csa_1st_str)
           str = csa_1st_str
