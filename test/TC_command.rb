@@ -93,6 +93,11 @@ class TestFactoryMethod < Test::Unit::TestCase
     assert_instance_of(ShogiServer::SpecialCommand, cmd)
   end
 
+  def test_keep_alive_command_space
+    cmd = ShogiServer::Command.factory(" ", @p)
+    assert_instance_of(ShogiServer::SpecialCommand, cmd)
+  end
+
   def test_move_command
     cmd = ShogiServer::Command.factory("+7776FU", @p)
     assert_instance_of(ShogiServer::MoveCommand, cmd)
@@ -406,6 +411,12 @@ class TestSpecialComand < Test::Unit::TestCase
 
   def test_keep_alive
     cmd = ShogiServer::SpecialCommand.new("", @p)
+    rc = cmd.call
+    assert_equal(:continue, rc)
+  end
+
+  def test_keep_alive_space
+    cmd = ShogiServer::SpecialCommand.new(" ", @p)
     rc = cmd.call
     assert_equal(:continue, rc)
   end

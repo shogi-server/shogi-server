@@ -28,7 +28,7 @@ module ShogiServer
     def Command.factory(str, player, time=Time.now)
       cmd = nil
       case str
-      when "", /^%[^%]/, :timeout
+      when "", " ", /^%[^%]/, :timeout
         cmd = SpecialCommand.new(str, player)
       when /^[\+\-][^%]/
         cmd = MoveCommand.new(str, player)
@@ -174,9 +174,15 @@ module ShogiServer
 
   # Command like "%TORYO", :timeout, or keep alive
   #
-  # Keep Alive is an application-level protocol. Whenever the server receives
-  # an LF, it sends back an LF.  Note that the 30 sec rule (client may not send
-  # LF again within 30 sec) is not implemented yet.
+  # Keep Alive is an application-level protocol here. There are two representations:
+  # 1) LF (empty string)
+  #    The server sends back an LF (empty string).
+  #    Note that the 30 sec rule (client may not send LF again within 30 sec)
+  #    is not implemented yet.
+  #    This is compliant with CSA's protocol in certain situations.
+  # 2) Space + LF (a single space)
+  #    The sever replies nothing.
+  #    This is an enhancement to CSA's protocol.
   #
   class SpecialCommand < Command
     def initialize(str, player)
@@ -186,9 +192,9 @@ module ShogiServer
     def call
       rc = :continue
 
-      if @str == "" # keep alive
+      if @str == "" || @str == " " # keep alive
         log_debug("received keep alive from #{@player.name}")
-        @player.write_safe("\n")
+        @player.write_safe("\n") if @str == ""
         # Fall back to :timeout to check the game gets timed up
         @str = :timeout
       end
