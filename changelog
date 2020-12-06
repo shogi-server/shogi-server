@@ -5,6 +5,9 @@
 	  alive messages as well.
 	  Thanks to mizar for reports and patches.
 	  (Closes #40821)
+	* [shogi-server] Support listening on IPv6 addresses
+	  Thanks to mizar for a patch.
+	  (Closes #40822)
 
 2020-10-04  Daigo Moriwaki <daigo at debian dot org>
 
