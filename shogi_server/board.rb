@@ -642,7 +642,7 @@ EOF
   #   - :max_moves
   #
   def handle_one_move(str, sente=nil)
-    if (str =~ /^([\+\-])(\d)(\d)(\d)(\d)([A-Z]{2})/)
+    if (str =~ /^([\+\-])(\d)(\d)(\d)(\d)([A-Z]{2})$/)
       sg = $1
       x0 = $2.to_i
       y0 = $3.to_i

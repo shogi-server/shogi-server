@@ -341,6 +341,13 @@ class TestMoveCommand < Test::Unit::TestCase
     assert_equal("'*comment", @game.log.first)
   end
 
+  def test_comment_illegal
+    cmd = ShogiServer::MoveCommand.new("+7776FU 'comment", @p)
+    rc = cmd.call
+    assert_equal(:continue, rc)
+    assert_nil(@game.log.first)
+  end
+
   def test_x1_return
     @game.finish_flag = true
     @p.protocol = ShogiServer::LoginCSA::PROTOCOL

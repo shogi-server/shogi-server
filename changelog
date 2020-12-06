@@ -8,6 +8,11 @@
 	* [shogi-server] Support listening on IPv6 addresses
 	  Thanks to mizar for a patch.
 	  (Closes #40822)
+	* [shogi-server] Make invalid comments illegal
+	  Some client sent moves with comments in an invalid format like
+	  "+7776FU '* 30 -3334FU +2726FU". Such messages are now deemed
+	  illegal.
+	  Thanks to mizar for a report.
 
 2020-10-04  Daigo Moriwaki <daigo at debian dot org>
 

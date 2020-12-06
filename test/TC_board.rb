@@ -998,3 +998,23 @@ class TestSplitMoves < Test::Unit::TestCase
     end
   end
 end
+
+
+class Test_illegal < Test::Unit::TestCase
+  def test_invaild_comment
+    b = ShogiServer::Board.new
+    b.set_from_str(<<EOM)
+P1-KY-KE-GI-KI-OU-KI-GI-KE-KY
+P2 * -HI *  *  *  *  * -KA * 
+P3-FU-FU-FU-FU-FU-FU-FU-FU-FU
+P4 *  *  *  *  *  *  *  *  * 
+P5 *  *  *  *  *  *  *  *  * 
+P6 *  *  *  *  *  *  *  *  * 
+P7+FU+FU+FU+FU+FU+FU+FU+FU+FU
+P8 * +KA *  *  *  *  * +HI * 
+P9+KY+KE+GI+KI+OU+KI+GI+KE+KY
+EOM
+
+    assert_equal(:illegal, b.handle_one_move("+7776FU '* 30 -3334FU +2726FU"))
+  end
+end
