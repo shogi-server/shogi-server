@@ -30,3 +30,7 @@ def log_info(msg)
   $logger.info(msg)
 end
 
+def log_debug(msg)
+  $logger.info(msg)
+end
+
