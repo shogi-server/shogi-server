@@ -504,6 +504,17 @@ class TestLeastDiff < Test::Unit::TestCase
     assert_pairs([@a,@b,@h], players)
   end
 
+  def test_match_seven_players
+    # Optimal: pairs (a,b)=300 + (c,d)=500 + (e,f)=150 = 950, with g as bye
+    # Suboptimal: pairs (b,c)=200 + (d,e)=500 + (f,g)=350 = 1050, with a as bye
+    players = [@g,@b,@d,@a,@f,@c,@e]
+    assert_equal(950,  @pairing.calculate_diff_with_penalty([@a,@b,@c,@d,@e,@f,@g],nil))
+    assert_equal(1050, @pairing.calculate_diff_with_penalty([@b,@c,@d,@e,@f,@g,@a],nil))
+    r = @pairing.match(players)
+    assert_pairs([@a,@b,@c,@d,@e,@f,@g], r)
+    assert_pairs([@a,@b,@c,@d,@e,@f,@g], players)
+  end
+
   def test_match_many_players
     players = [@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h,@a,@b,@h]
     r = @pairing.match(players)

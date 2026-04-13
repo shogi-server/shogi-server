@@ -41,6 +41,12 @@
 	* [shogi_server, mk_game_results] Remove dead RUBY_VERSION guards.
 	  Branches conditioned on RUBY_VERSION < "2.2.0" and < "1.9.1" are
 	  never taken on Ruby >= 3.2 and have been removed.
+	* [pairing] Fix intermittent failure in LeastDiff#match for small
+	  player counts. For 7 or fewer players, enumerate all permutations
+	  exhaustively instead of relying on random sampling; random sampling
+	  with only 10 trials had a ~1.7% chance per run of missing the
+	  optimal pairing when the player count was odd (e.g. 3 players).
+	  Added test_match_seven_players to cover the 7-player case.
 	* [utils/players_graph] Replace removed FileTest.exists? with exist?.
 	  FileTest.exists? was removed in Ruby 3.2.
 	* [utils] Replace eval-based $OPT_* option parsing with a $options hash.
