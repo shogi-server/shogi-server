@@ -107,7 +107,7 @@ def main
   while l = $stdin.gets do
     lines << l
   end
-  file = YAML::load(lines)
+  file = YAML::unsafe_load(lines)
   erb = ERB.new( DATA.read, nil, "%>" )
   tables = []
   group_names = []

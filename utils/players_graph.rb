@@ -146,7 +146,7 @@ def load_file(file_name)
     $log.error("Invalid file name: %s" % [file_name])
     return
   end
-  db = YAML::load_file(file_name)
+  db = YAML::unsafe_load_file(file_name)
   unless db['players'] && db['players'][0]
     $log.error("Invalid file format: %s" % [file_name])
     return
