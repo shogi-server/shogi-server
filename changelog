@@ -16,6 +16,9 @@
 	  WEBrick no longer sets this automatically, so it must be set
 	  explicitly to ensure unbuffered I/O on each client connection.
 	* [mk_html] Pass ERB.new trim_mode as a keyword argument.
+	* [test] Stop reader thread before closing socket in SocketPlayer#close
+	  and #logout. On Linux, closing a socket does not unblock a thread
+	  waiting in select(2), causing a 10-second timeout.
 
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 
