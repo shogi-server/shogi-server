@@ -1,3 +1,19 @@
+2026-04-13  Daigo Moriwaki
+
+	* Ruby 3 compatibility. The server now requires Ruby 3.2 or
+	  later. A Gemfile is provided; run `bundle install` before
+	  starting the server.
+	* [shogi-server] WEBrick is now a gem dependency.
+	  WEBrick was removed from the Ruby standard library in Ruby 3.0
+	  and must be installed separately. The provided Gemfile covers
+	  this.
+	* [shogi-server] Use YAML.unsafe_load for Psych 4 compatibility.
+	  Ruby 3.1 ships Psych 4, which changed YAML.load to safe_load
+	  semantics. Server-internal YAML files that contain Time values
+	  now use YAML.unsafe_load explicitly.
+	* [shogi-server] Replace deprecated File.exists? with File.exist?
+	* [mk_html] Pass ERB.new trim_mode as a keyword argument.
+
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Improve timed-up detection (continued).
