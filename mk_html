@@ -108,7 +108,7 @@ def main
     lines << l
   end
   file = YAML::unsafe_load(lines)
-  erb = ERB.new( DATA.read, nil, "%>" )
+  erb = ERB.new( DATA.read, trim_mode: "%>" )
   tables = []
   group_names = []
   file["players"].keys.sort.each do |index|
@@ -144,7 +144,7 @@ def main
     end
   end 
   top_rate = nil  
-  table = ERB.new(<<ENDTABLE, nil, "%>")
+  table = ERB.new(<<ENDTABLE, trim_mode: "%>")
 % sorted_keys.each do |key|
   <%
     win  = yaml[key]['win']
