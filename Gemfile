@@ -2,12 +2,14 @@ source 'https://rubygems.org'
 
 ruby '>= 3.2.3'
 
-# Required by the standalone `webserver` script. WEBrick was removed from
-# the Ruby standard library in Ruby 3.0 and is now distributed as a gem.
+# Required by `shogi-server` (via shogi_server.rb, which uses
+# WEBrick::GenericServer / WEBrick::Daemon) and by the standalone
+# `webserver` script. WEBrick was removed from the Ruby standard library
+# in Ruby 3.0 and is now distributed as a gem.
 gem 'webrick'
 
-# The core `shogi-server` binary and everything under `shogi_server/` rely
-# only on the standard library, so no further gems are required to run it.
+# Beyond webrick, the core `shogi-server` binary and everything under
+# `shogi_server/` rely only on the standard library.
 #
 # The following are needed only if you run the corresponding auxiliary
 # scripts; install them ad-hoc rather than burdening every deployment:
