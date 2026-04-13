@@ -1,5 +1,6 @@
 $:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
+require 'time'
 require 'shogi_server'
 require 'shogi_server/league/floodgate'
 require 'fileutils'
