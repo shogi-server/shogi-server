@@ -7,7 +7,7 @@ require "shogi_server/buoy.rb"
 class TestFork < BaseClient
   def parse_game_name(player)
     player.puts "%%LIST"
-    sleep 1
+    player.wait /##\[LIST\]/
     if /##\[LIST\] (.*)/ =~ player.message
       return $1
     end
@@ -24,7 +24,7 @@ class TestFork < BaseClient
 
     result, result2 = handshake do
       @admin.puts "%%FORK wronggame-900-0 buoy_WrongGame-900-0"
-      sleep 1
+      @admin.wait /##\[ERROR\] wrong source game name/
     end
 
     assert /##\[ERROR\] wrong source game name/ =~ @admin.message
@@ -43,7 +43,7 @@ class TestFork < BaseClient
     result, result2 = handshake do
       source_game = parse_game_name(@admin)
       @admin.puts "%%FORK #{source_game} buoy_TooShortFork-900-0 0"
-      sleep 1
+      @admin.wait /##\[ERROR\] number of moves to fork is out of range/
     end
 
     assert /##\[ERROR\] number of moves to fork is out of range/ =~ @admin.message
@@ -118,9 +118,8 @@ class TestFork < BaseClient
 
     result, result2 = handshake do
       source_game = parse_game_name(@admin)
-      sleep 0.2
       @admin.puts "%%FORK #{source_game}" # nil for new_buoy_game name
-      sleep 1.2
+      @admin.wait /##\[FORK\]: new buoy game name:/
       assert /##\[FORK\]: new buoy game name: buoy_TestFork_1-1500-0/ =~ @admin.message
     end
 

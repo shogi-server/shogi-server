@@ -24,6 +24,12 @@
 	* [test] Stop reader thread before closing socket in SocketPlayer#close
 	  and #logout. On Linux, closing a socket does not unblock a thread
 	  waiting in select(2), causing a 10-second timeout.
+	* [test] Fix intermittent timing failures in TC_fork. Replace fixed
+	  sleep() calls with wait() polling in parse_game_name and in
+	  test_wrong_game, test_too_short_fork, and test_fork2. A slow Docker
+	  host could cause parse_game_name to return nil before the LIST
+	  response arrived, sending a malformed FORK command that produced the
+	  wrong error message.
 
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 
