@@ -1,4 +1,4 @@
-2026-04-13  Daigo Moriwaki
+2026-04-13  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
 
 	* Ruby 3 compatibility. The server now requires Ruby 3.2 or
 	  later. A Gemfile is provided; run `bundle install` before
@@ -12,6 +12,9 @@
 	  semantics. Server-internal YAML files that contain Time values
 	  now use YAML.unsafe_load explicitly.
 	* [shogi-server] Replace deprecated File.exists? with File.exist?
+	* [shogi-server] Restore client.sync = true.
+	  WEBrick no longer sets this automatically, so it must be set
+	  explicitly to ensure unbuffered I/O on each client connection.
 	* [mk_html] Pass ERB.new trim_mode as a keyword argument.
 
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>

@@ -488,7 +488,7 @@ def main
 
   server.start do |client|
     begin
-      # client.sync = true # this is already set in WEBrick
+      client.sync = true
       client.setsockopt(Socket::SOL_SOCKET, Socket::SO_KEEPALIVE, true)
         # Keepalive time can be set by /proc/sys/net/ipv4/tcp_keepalive_time
       player, login = login_loop(client) # loop
