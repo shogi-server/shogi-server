@@ -30,7 +30,6 @@ require 'fileutils'
 require 'logger'
 require 'pathname'
 
-require 'shogi_server/compatible'
 require 'shogi_server/board'
 require 'shogi_server/game'
 require 'shogi_server/league'
@@ -95,11 +94,7 @@ class Logger < ::Logger
       end
 
       def age_file_name(time)
-        if RUBY_VERSION >= "2.2.0"
-          postfix = previous_period_end(time, @shift_age).strftime("%Y%m%d")	# YYYYMMDD
-        else
-          postfix = previous_period_end(time).strftime("%Y%m%d")	# YYYYMMDD
-        end
+        postfix = previous_period_end(time, @shift_age).strftime("%Y%m%d")	# YYYYMMDD
         age_file = File.join(
                      File.dirname(@filename),
                      postfix[0..3], # YYYY

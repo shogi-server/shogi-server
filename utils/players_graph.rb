@@ -158,7 +158,7 @@ def load_file(file_name)
 end
 
 def empty_file?(file)
-  if !FileTest.exists?(file)
+  if !FileTest.exist?(file)
     $log.error("Could not find the file: %s" % [file])
     return true
   end

@@ -30,6 +30,19 @@
 	  host could cause parse_game_name to return nil before the LIST
 	  response arrived, sending a malformed FORK command that produced the
 	  wrong error message.
+	* [shogi_server/config] Fix ERB evaluation of shogi-server.yaml.
+	  The closing parenthesis of ERB.new() was misplaced, causing .result
+	  to be called on the String returned by IO.read rather than on the ERB
+	  object. The config file feature would have raised NoMethodError if
+	  shogi-server.yaml existed.
+	* [shogi_server/compatible] Remove Ruby 1.8.7 compatibility shim.
+	  The Array#sample polyfill is dead code on Ruby >= 3.2; removed it
+	  along with its require in shogi_server.rb.
+	* [shogi_server, mk_game_results] Remove dead RUBY_VERSION guards.
+	  Branches conditioned on RUBY_VERSION < "2.2.0" and < "1.9.1" are
+	  never taken on Ruby >= 3.2 and have been removed.
+	* [utils/players_graph] Replace removed FileTest.exists? with exist?.
+	  FileTest.exists? was removed in Ruby 3.2.
 
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 

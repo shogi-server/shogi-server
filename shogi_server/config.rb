@@ -120,7 +120,7 @@ module ShogiServer
       end
 
       if options[:topdir] && File.exist?(File.join(options[:topdir], FILENAME))
-        merge!(YAML.unsafe_load(ERB.new(IO.read(File.join(options[:topdir], FILENAME)).result)))
+        merge!(YAML.unsafe_load(ERB.new(IO.read(File.join(options[:topdir], FILENAME))).result))
       end
 
       merge!(options)

@@ -59,11 +59,7 @@ require 'getoptlong'
 # @parameter file an absolute path of a csa file
 #
 def grep(file)
-  if RUBY_VERSION >= "1.9.1"
-    str = File.open(file, "r:EUC-JP").read
-  else
-    str = File.open(file, "r").read
-  end
+  str = File.open(file, "r:EUC-JP").read
 
     black_name = nil
     black_mark = nil
