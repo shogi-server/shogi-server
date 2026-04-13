@@ -141,7 +141,7 @@ class Player < BasicPlayer
     @status = "connected"       # game_waiting -> agree_waiting -> start_waiting -> game -> finished
 
     @protocol = nil             # CSA or x1
-    @eol = eol || "\m"          # favorite eol code
+    @eol = eol || "\n"          # favorite eol code
     @game = nil
     @mytime = 0                 # set in start method also
     @socket_buffer = []

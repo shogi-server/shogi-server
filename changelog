@@ -43,6 +43,17 @@
 	  never taken on Ruby >= 3.2 and have been removed.
 	* [utils/players_graph] Replace removed FileTest.exists? with exist?.
 	  FileTest.exists? was removed in Ruby 3.2.
+	* [utils] Replace eval-based $OPT_* option parsing with a $options hash.
+	  All five utility scripts (csa-filter, correct-bug14635, eval_graph,
+	  players_graph, statistics) used eval to set global $OPT_* variables
+	  from command-line arguments. A single-quote in any argument value would
+	  break the eval with a SyntaxError. Replaced with a plain hash.
+	* [shogi_server/player] Fix invalid escape sequence "\m" in eol default.
+	  "\m" is not a recognised escape sequence and resolves to "m". Changed
+	  to "\n". The default is unreachable in practice (the login loop always
+	  provides the eol argument), so there is no behaviour change.
+	* [utils/correct-bug14635] Remove no-op $KCODE="e" assignment.
+	  $KCODE has been ignored since Ruby 1.9.
 
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 

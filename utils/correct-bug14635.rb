@@ -37,8 +37,6 @@ require 'getoptlong'
 require 'nkf'
 require 'pathname'
 
-$KCODE="e"
-
 class CheckCsaFile
   def initialize(file_path)
     @file = file_path
@@ -92,9 +90,10 @@ if $0 == __FILE__
   parser = GetoptLong.new(
              ['--dry-run', GetoptLong::NO_ARGUMENT]
            )
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
@@ -106,7 +105,7 @@ if $0 == __FILE__
       csa = CheckCsaFile.new(path)
       if csa.check
         puts path
-        next if $OPT_DRY_RUN
+        next if $options["DRY_RUN"]
 
         csa.execute
       end

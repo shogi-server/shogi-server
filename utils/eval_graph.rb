@@ -293,16 +293,17 @@ if $0 == __FILE__
 
   parser = GetoptLong.new
   parser.set_options(['--update', GetoptLong::NO_ARGUMENT])
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
   end
   
   while file = ARGV.shift
-    next if !$OPT_UPDATE && File.exist?(to_svg_file(file))
+    next if !$options["UPDATE"] && File.exist?(to_svg_file(file))
     read(Pathname.new(file).readlines, file)
     str = reformat_svg(Pathname.new(to_svg_file(file)).read)
     open(to_svg_file(file),"w+") {|f| f << str}

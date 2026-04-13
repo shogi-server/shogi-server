@@ -182,14 +182,15 @@ if $0 == __FILE__
 
   parser = GetoptLong.new
   parser.set_options(['--output-dir', '-o', GetoptLong::REQUIRED_ARGUMENT])
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
   end
-  usage if !$OPT_OUTPUT_DIR || ARGV.size < 2
+  usage if !$options["OUTPUT_DIR"] || ARGV.size < 2
   
   while file = ARGV.shift
     next if empty_file?(file)
@@ -200,9 +201,9 @@ if $0 == __FILE__
     exit 0 
   end
   
-  formats = [LargePngFormat.new($OPT_OUTPUT_DIR),
-             SmallPngFormat.new($OPT_OUTPUT_DIR),
-             SvgFormat.new($OPT_OUTPUT_DIR)]
+  formats = [LargePngFormat.new($options["OUTPUT_DIR"]),
+             SmallPngFormat.new($options["OUTPUT_DIR"]),
+             SvgFormat.new($options["OUTPUT_DIR"])]
 
   $players.each do |name, hash|
     dates, rates = hash.sort.transpose

@@ -147,9 +147,10 @@ if $0 == __FILE__
              ['--winner',  GetoptLong::REQUIRED_ARGUMENT],
              ['--loser',   GetoptLong::REQUIRED_ARGUMENT]
            )
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
@@ -161,8 +162,8 @@ if $0 == __FILE__
 
       next unless csa.black_id && csa.white_id
 
-      if $OPT_PLAYERS
-        players = $OPT_PLAYERS.split(",")
+      if $options["PLAYERS"]
+        players = $options["PLAYERS"].split(",")
         unless (csa.black_id.downcase.index(players[0].downcase) == 0 &&
                 csa.white_id.downcase.index(players[1].downcase) == 0) ||
                (csa.black_id.downcase.index(players[1].downcase) == 0 &&
@@ -171,18 +172,18 @@ if $0 == __FILE__
         end
       end
       
-      if $OPT_BLACK
-        next unless csa.black_id.downcase.index($OPT_BLACK.downcase) == 0
+      if $options["BLACK"]
+        next unless csa.black_id.downcase.index($options["BLACK"].downcase) == 0
       end
-      if $OPT_WHITE
-        next unless csa.white_id.downcase.index($OPT_WHITE.downcase) == 0
+      if $options["WHITE"]
+        next unless csa.white_id.downcase.index($options["WHITE"].downcase) == 0
       end
 
-      if $OPT_WINNER
-        next unless csa.winner && csa.winner.downcase.index($OPT_WINNER.downcase) == 0
+      if $options["WINNER"]
+        next unless csa.winner && csa.winner.downcase.index($options["WINNER"].downcase) == 0
       end
-      if $OPT_LOSER
-        next unless csa.loser && csa.loser.downcase.index($OPT_LOSER.downcase) == 0
+      if $options["LOSER"]
+        next unless csa.loser && csa.loser.downcase.index($options["LOSER"].downcase) == 0
       end
 
       puts csa.file_name
