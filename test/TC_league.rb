@@ -8,7 +8,7 @@ require 'shogi_server/league'
 class TestPersistent < Test::Unit::TestCase
   def setup
     @filename = File.join(".", "test.yaml")
-    if File.exists?(@filename)
+    if File.exist?(@filename)
       FileUtils.rm(@filename)
     end
     @persistent = ShogiServer::League::Persistent.new(@filename)

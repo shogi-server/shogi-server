@@ -105,7 +105,7 @@ class League
 
           if $DEBUG
             ret = NextTimeGenerator_Debug.new
-          elsif File.exists?(conf_file_name) 
+          elsif File.exist?(conf_file_name)
             lines = IO.readlines(conf_file_name)
             ret =  NextTimeGeneratorConfig.new(lines)
           elsif game_name == "floodgate-900-0"

@@ -302,7 +302,7 @@ if $0 == __FILE__
   end
   
   while file = ARGV.shift
-    next if !$OPT_UPDATE && File.exists?(to_svg_file(file))
+    next if !$OPT_UPDATE && File.exist?(to_svg_file(file))
     read(Pathname.new(file).readlines, file)
     str = reformat_svg(Pathname.new(to_svg_file(file)).read)
     open(to_svg_file(file),"w+") {|f| f << str}
