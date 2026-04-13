@@ -39,6 +39,7 @@ class SocketPlayer
   end
 
   def reader
+    raise "reader already running" if @thread && @thread.alive?
     @thread = Thread.new do
       begin
         Thread.pass

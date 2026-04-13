@@ -1,10 +1,14 @@
 2026-04-13  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
 
+	* [test] Guard against double-starting the reader thread in SocketPlayer.
+	  reader() now raises if the thread is already alive, preventing silent
+	  re-entry. Remove the now-redundant reader()+sleep(0.1) calls that
+	  preceded every login() in TC_fork; login() starts the reader itself,
+	  so the explicit call was unnecessary.
 	* [Dockerfile] Update base image to Debian Trixie (13).
 	  Switch from debian:stretch-slim (EOL) to debian:trixie-slim.
 	  Ruby and ruby-gsl are now installed from apt, ensuring ABI
 	  compatibility. bundler and rgl are also installed.
-
 	* Ruby 3 compatibility. The server now requires Ruby 3.2 or
 	  later. A Gemfile is provided; run `bundle install` before
 	  starting the server.

@@ -17,8 +17,6 @@ class TestFork < BaseClient
     @admin = SocketPlayer.new "dummy", "admin", false
     @admin.connect
     sleep 0.1
-    @admin.reader
-    sleep 0.1
     @admin.login
     sleep 0.1
 
@@ -34,8 +32,6 @@ class TestFork < BaseClient
   def test_too_short_fork
     @admin = SocketPlayer.new "dummy", "admin", false
     @admin.connect
-    sleep 0.1
-    @admin.reader
     sleep 0.1
     @admin.login
     sleep 0.1
@@ -56,8 +52,6 @@ class TestFork < BaseClient
     @admin = SocketPlayer.new "dummy", "admin", "*"
     @admin.connect
     sleep 0.1
-    @admin.reader
-    sleep 0.1
     @admin.login
     sleep 0.1
 
@@ -75,10 +69,6 @@ class TestFork < BaseClient
     @p1.connect
     sleep 0.1
     @p2.connect
-    sleep 0.1
-    @p1.reader
-    sleep 0.1
-    @p2.reader
     sleep 0.1
     @p1.login
     sleep 0.1
@@ -111,8 +101,6 @@ class TestFork < BaseClient
     @admin = SocketPlayer.new "dummy", "admin", "*"
     @admin.connect
     sleep 0.1
-    @admin.reader
-    sleep 0.1
     @admin.login
     sleep 0.1
 
@@ -129,10 +117,6 @@ class TestFork < BaseClient
     @p1.connect
     sleep 0.1
     @p2.connect
-    sleep 0.1
-    @p1.reader
-    sleep 0.1
-    @p2.reader
     sleep 0.1
     @p1.login
     sleep 0.1
