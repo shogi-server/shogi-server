@@ -1,5 +1,6 @@
 .image-*
 *.log
+*.local.json
 /*.conf
 /*.yaml
 /*.txt
