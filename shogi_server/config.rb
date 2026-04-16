@@ -28,6 +28,7 @@
 #
 
 require 'erb'
+require 'yaml'
 
 class Hash
   def deep_merge!(second)
