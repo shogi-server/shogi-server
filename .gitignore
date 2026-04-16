@@ -1,1 +1,9 @@
 .image-*
+*.log
+/*.conf
+/*.yaml
+/*.txt
+/logs
+/00LIST*
+/2026
+/test/2026
