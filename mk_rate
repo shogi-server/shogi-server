@@ -76,7 +76,7 @@
 #
 # Sample Command lines that install prerequires will work on Debian.
 #
-# * Ruby 2.0.0 or later (including Rubygems)
+# * Ruby 3.2 or later (including Rubygems)
 #
 #   $ sudo aptitude install ruby
 #

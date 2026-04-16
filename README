@@ -10,7 +10,7 @@ in order for computer shogi players to play games.
 
 === Pre-requires
 
-Ruby 2.1 or later
+Ruby 3.2 or later
 
 For Debian,
 

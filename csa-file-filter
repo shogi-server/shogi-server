@@ -50,7 +50,7 @@
 # 
 # Sample Command lines that isntall prerequires will work on Debian.
 # 
-# * Ruby 2.0.0 or later including RDoc
+# * Ruby 3.2 or later including RDoc
 # 
 #   $ sudo aptitude install ruby ruby
 # 

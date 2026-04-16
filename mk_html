@@ -41,7 +41,7 @@
 #
 # == Prerequire
 #
-# * Ruby 2.0.0 or later
+# * Ruby 3.2 or later
 #
 #   $ sudo aptitude install ruby ruby
 #
