@@ -1,7 +1,6 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
-require 'shogi_server'
-require 'shogi_server/player'
+require_relative '../shogi_server'
+require_relative '../shogi_server/player'
 
 class TestPlayer < Test::Unit::TestCase
   def setup

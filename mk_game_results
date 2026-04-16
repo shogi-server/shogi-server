@@ -5,7 +5,7 @@
 # Homepage:: http://sourceforge.jp/projects/shogi-server/
 #
 #--
-# Copyright (C) 2009-2012 Daigo Moriwaki <daigo at debian dot org>
+# Copyright (C) 2009-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
 #
 # Sample Command lines that isntall prerequires will work on Debian.
 #
-# * Ruby 2.0.0 or later
+# * Ruby 3.2 or later
 #
 #   $ sudo aptitude install ruby
 #
@@ -59,11 +59,7 @@ require 'getoptlong'
 # @parameter file an absolute path of a csa file
 #
 def grep(file)
-  if RUBY_VERSION >= "1.9.1"
-    str = File.open(file, "r:EUC-JP").read
-  else
-    str = File.open(file, "r").read
-  end
+  str = File.open(file, "r:EUC-JP").read
 
     black_name = nil
     black_mark = nil

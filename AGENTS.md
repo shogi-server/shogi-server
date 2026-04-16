@@ -2,7 +2,7 @@
 
 ## Project
 
-Shogi-server is a Ruby server implementing the Computer Shogi Association (CSA) Server Protocol v1.2.1, letting computer shogi programs connect over TCP and play rated or Floodgate (automated pairing) games. Requires Ruby 2.1+. No gem bundling — it runs straight from the source tree.
+Shogi-server is a Ruby server implementing the Computer Shogi Association (CSA) Server Protocol v1.2.1, letting computer shogi programs connect over TCP and play rated or Floodgate (automated pairing) games. Requires Ruby 3.2+. No gem bundling — it runs straight from the source tree.
 
 ## Common commands
 

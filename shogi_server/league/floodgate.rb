@@ -1,4 +1,4 @@
-require 'shogi_server/util'
+require_relative '../util'
 require 'date'
 require 'thread'
 require 'ostruct'
@@ -105,7 +105,7 @@ class League
 
           if $DEBUG
             ret = NextTimeGenerator_Debug.new
-          elsif File.exists?(conf_file_name) 
+          elsif File.exist?(conf_file_name)
             lines = IO.readlines(conf_file_name)
             ret =  NextTimeGeneratorConfig.new(lines)
           elsif game_name == "floodgate-900-0"
@@ -326,7 +326,7 @@ class League
         return unless @file.exist?
 
         begin
-          @records = YAML.load_file(@file)
+          @records = YAML.unsafe_load_file(@file)
           unless @records && @records.instance_of?(Array)
             $logger.error "%s is not a valid yaml file. Instead, an empty array will be used and updated." % [@file]
             @records = []

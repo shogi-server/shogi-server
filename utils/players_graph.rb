@@ -9,7 +9,7 @@
 #      - Gnuplot:  http://www.gnuplot.info/
 #                  On Debian, $ sudo apt-get install gnuplot
 #    
-#    Copyright (C) 2008-2012 Daigo Moriwaki <daigo@debian.org>
+#    Copyright (C) 2008-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 #    Version: $Id$
 #
@@ -146,7 +146,7 @@ def load_file(file_name)
     $log.error("Invalid file name: %s" % [file_name])
     return
   end
-  db = YAML::load_file(file_name)
+  db = YAML::unsafe_load_file(file_name)
   unless db['players'] && db['players'][0]
     $log.error("Invalid file format: %s" % [file_name])
     return
@@ -158,7 +158,7 @@ def load_file(file_name)
 end
 
 def empty_file?(file)
-  if !FileTest.exists?(file)
+  if !FileTest.exist?(file)
     $log.error("Could not find the file: %s" % [file])
     return true
   end
@@ -182,14 +182,15 @@ if $0 == __FILE__
 
   parser = GetoptLong.new
   parser.set_options(['--output-dir', '-o', GetoptLong::REQUIRED_ARGUMENT])
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
   end
-  usage if !$OPT_OUTPUT_DIR || ARGV.size < 2
+  usage if !$options["OUTPUT_DIR"] || ARGV.size < 2
   
   while file = ARGV.shift
     next if empty_file?(file)
@@ -200,9 +201,9 @@ if $0 == __FILE__
     exit 0 
   end
   
-  formats = [LargePngFormat.new($OPT_OUTPUT_DIR),
-             SmallPngFormat.new($OPT_OUTPUT_DIR),
-             SvgFormat.new($OPT_OUTPUT_DIR)]
+  formats = [LargePngFormat.new($options["OUTPUT_DIR"]),
+             SmallPngFormat.new($options["OUTPUT_DIR"]),
+             SvgFormat.new($options["OUTPUT_DIR"])]
 
   $players.each do |name, hash|
     dates, rates = hash.sort.transpose

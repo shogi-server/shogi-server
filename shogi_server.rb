@@ -1,7 +1,7 @@
 ## $Id$
 
 ## Copyright (C) 2004 NABEYA Kenichi (aka nanami@2ch)
-## Copyright (C) 2007-2012 Daigo Moriwaki (daigo at debian dot org)
+## Copyright (C) 2007-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -30,19 +30,18 @@ require 'fileutils'
 require 'logger'
 require 'pathname'
 
-require 'shogi_server/compatible'
-require 'shogi_server/board'
-require 'shogi_server/game'
-require 'shogi_server/league'
-require 'shogi_server/login'
-require 'shogi_server/move'
-require 'shogi_server/piece'
-require 'shogi_server/player'
-require 'shogi_server/timeout_queue'
-require 'shogi_server/usi'
-require 'shogi_server/util'
-require 'shogi_server/command'
-require 'shogi_server/buoy'
+require_relative 'shogi_server/board'
+require_relative 'shogi_server/game'
+require_relative 'shogi_server/league'
+require_relative 'shogi_server/login'
+require_relative 'shogi_server/move'
+require_relative 'shogi_server/piece'
+require_relative 'shogi_server/player'
+require_relative 'shogi_server/timeout_queue'
+require_relative 'shogi_server/usi'
+require_relative 'shogi_server/util'
+require_relative 'shogi_server/command'
+require_relative 'shogi_server/buoy'
 
 module ShogiServer # for a namespace
 
@@ -95,11 +94,7 @@ class Logger < ::Logger
       end
 
       def age_file_name(time)
-        if RUBY_VERSION >= "2.2.0"
-          postfix = previous_period_end(time, @shift_age).strftime("%Y%m%d")	# YYYYMMDD
-        else
-          postfix = previous_period_end(time).strftime("%Y%m%d")	# YYYYMMDD
-        end
+        postfix = previous_period_end(time, @shift_age).strftime("%Y%m%d")	# YYYYMMDD
         age_file = File.join(
                      File.dirname(@filename),
                      postfix[0..3], # YYYY

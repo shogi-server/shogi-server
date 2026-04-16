@@ -7,8 +7,8 @@
 # * Gnuplot:  http://www.gnuplot.info/
 #   * On Debian, $ sudo apt-get install gnuplot
 #
-# Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2006-2012 Daigo Moriwaki <daigo at debian dot org>
+# Author::    Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
+# Copyright:: Copyright (C) 2006-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # $Id$
 #
@@ -293,16 +293,17 @@ if $0 == __FILE__
 
   parser = GetoptLong.new
   parser.set_options(['--update', GetoptLong::NO_ARGUMENT])
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
   end
   
   while file = ARGV.shift
-    next if !$OPT_UPDATE && File.exists?(to_svg_file(file))
+    next if !$options["UPDATE"] && File.exist?(to_svg_file(file))
     read(Pathname.new(file).readlines, file)
     str = reformat_svg(Pathname.new(to_svg_file(file)).read)
     open(to_svg_file(file),"w+") {|f| f << str}

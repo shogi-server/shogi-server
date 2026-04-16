@@ -1,9 +1,8 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
 require 'yaml'
-require 'shogi_server'
-require 'shogi_server/player'
-require 'shogi_server/league/floodgate'
+require_relative '../shogi_server'
+require_relative '../shogi_server/player'
+require_relative '../shogi_server/league/floodgate'
 
 $league = ShogiServer::League.new(File.dirname(__FILE__))
 $league.event = "TC_floodgate_history"

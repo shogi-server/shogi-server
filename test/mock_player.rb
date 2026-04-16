@@ -1,5 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
-require 'shogi_server/player'
+require_relative '../shogi_server/player'
 
 class MockPlayer < ShogiServer::BasicPlayer
   attr_reader :out

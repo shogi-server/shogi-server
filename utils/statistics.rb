@@ -9,8 +9,8 @@
 # Sample command line:
 #   $ ./statistics.rb /dev/shm/floodgate
 #
-# Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2009-2012 Daigo Moriwaki <daigo at debian dot org>
+# Author::    Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
+# Copyright:: Copyright (C) 2009-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # $Id$
 #
@@ -30,8 +30,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 #++
 
-$:.unshift File.dirname(__FILE__)
-require 'csa-filter'
+require_relative 'csa-filter'
 require 'set'
 
 class Monthly
@@ -111,7 +110,7 @@ $moves    = Values.new
 $states   = State.new
 
 def do_file(file)
-  $OPT_REPEAT -= 1 if $OPT_REPEAT > 0
+  $options["REPEAT"] -= 1 if $options["REPEAT"] > 0
   csa = CsaFileReader.new(file, "EUC-JP")
 
   # Want to see completed games only
@@ -164,35 +163,36 @@ EOF
              ['--filter', GetoptLong::REQUIRED_ARGUMENT],
              ['--h', '-h', GetoptLong::NO_ARGUMENT]
            )
+  $options = {}
   begin
     parser.each_option do |name, arg|
-      eval "$OPT_#{name.sub(/^--/, '').gsub(/-/, '_').upcase} = '#{arg}'"
+      $options[name.sub(/^--/, '').gsub(/-/, '_').upcase] = arg
     end
   rescue
     usage
   end
 
-  if $OPT_H
+  if $options["H"]
     usage
   end
 
-  $OPT_REPEAT = $OPT_REPEAT.to_i
-  if $OPT_REPEAT == 0
-    $OPT_REPEAT = -1
+  $options["REPEAT"] = $options["REPEAT"].to_i
+  if $options["REPEAT"] == 0
+    $options["REPEAT"] = -1
   end
 
   while (cmd = ARGV.shift)
 
     if FileTest.directory?(cmd)
       Dir.glob(File.join(cmd, "**", "*.csa")).each do |file|
-        break if $OPT_REPEAT == 0
-        if $OPT_FILTER.nil? || /#{$OPT_FILTER}/ =~ file
+        break if $options["REPEAT"] == 0
+        if $options["FILTER"].nil? || /#{$options["FILTER"]}/ =~ file
           do_file(file)
         end
       end
     elsif FileTest.file?(cmd)
-      break if $OPT_REPEAT == 0
-      if $OPT_FILTER.nil? || /#{$OPT_FILTER}/ =~ cmd
+      break if $options["REPEAT"] == 0
+      if $options["FILTER"].nil? || /#{$options["FILTER"]}/ =~ cmd
         do_file(cmd)
       end
     else

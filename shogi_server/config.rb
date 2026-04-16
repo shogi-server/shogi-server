@@ -1,6 +1,6 @@
 #--
 # Copyright (c) 2006-2009 by Craig P Jolicoeur <cpjolicoeur at gmail dot com>
-# Copyright (C) 2009-2012 Daigo Moriwaki <daigo at debian dot org>
+# Copyright (C) 2009-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 # 
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -28,6 +28,7 @@
 #
 
 require 'erb'
+require 'yaml'
 
 class Hash
   def deep_merge!(second)
@@ -120,7 +121,7 @@ module ShogiServer
       end
 
       if options[:topdir] && File.exist?(File.join(options[:topdir], FILENAME))
-        merge!(YAML.load(ERB.new(IO.read(File.join(options[:topdir], FILENAME)).result)))
+        merge!(YAML.unsafe_load(ERB.new(IO.read(File.join(options[:topdir], FILENAME))).result))
       end
 
       merge!(options)

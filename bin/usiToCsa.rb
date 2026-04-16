@@ -5,7 +5,7 @@
 # Homepage:: http://sourceforge.jp/projects/shogi-server/
 #
 #--
-# Copyright (C) 2013 Daigo Moriwaki (daigo at debian dot org)
+# Copyright (C) 2013-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,8 +24,7 @@
 #
 #
 
-$:.unshift(File.join(File.dirname(File.expand_path(__FILE__)), ".."))
-require 'shogi_server'
+require_relative '../shogi_server'
 require 'logger'
 require 'socket'
 

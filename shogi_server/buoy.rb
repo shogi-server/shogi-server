@@ -1,5 +1,5 @@
-require 'shogi_server/config'
-require 'shogi_server/game'
+require_relative './config'
+require_relative './game'
 require 'yaml'
 require 'yaml/store'
 

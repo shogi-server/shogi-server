@@ -1,7 +1,7 @@
 ## $Id$
 
 ## Copyright (C) 2004 NABEYA Kenichi (aka nanami@2ch)
-## Copyright (C) 2007-2012 Daigo Moriwaki (daigo at debian dot org)
+## Copyright (C) 2007-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-require 'shogi_server/league/floodgate'
-require 'shogi_server/game_result'
-require 'shogi_server/time_clock'
-require 'shogi_server/util'
+require_relative './league/floodgate'
+require_relative './game_result'
+require_relative './time_clock'
+require_relative './util'
 
 module ShogiServer # for a namespace
 

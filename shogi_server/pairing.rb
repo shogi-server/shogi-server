@@ -1,7 +1,7 @@
 ## $Id$
 
 ## Copyright (C) 2004 NABEYA Kenichi (aka nanami@2ch)
-## Copyright (C) 2007-2012 Daigo Moriwaki (daigo at debian dot org)
+## Copyright (C) 2007-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-require 'shogi_server/util'
+require_relative './util'
 
 module ShogiServer
 
@@ -550,14 +550,23 @@ module ShogiServer
       path = ShogiServer::League::Floodgate.history_file_path(players.first.game_name)
       history = ShogiServer::League::Floodgate::History.factory(path)
 
-      # Increase trials, depending on a number of players
-      trials = [300, total_posibilities(players.size)/3].min
-      trials = [10, trials].max
-      log_message("Floodgate: %d trials" % [trials])
-      trials.times do
-        m = random_match(players)
-        matches << m
-        scores << calculate_diff_with_penalty(m, history)
+      # For small groups, enumerate all permutations to guarantee the optimal pairing.
+      # For larger groups, use random sampling (7! = 5040 is the practical threshold).
+      if players.size <= 7
+        players.permutation.each do |perm|
+          matches << perm
+          scores << calculate_diff_with_penalty(perm, history)
+        end
+      else
+        # Increase trials, depending on a number of players
+        trials = [300, total_posibilities(players.size)/3].min
+        trials = [10, trials].max
+        log_message("Floodgate: %d trials" % [trials])
+        trials.times do
+          m = random_match(players)
+          matches << m
+          scores << calculate_diff_with_penalty(m, history)
+        end
       end
 
       # Debug
@@ -575,7 +584,12 @@ module ShogiServer
           min_score = s
         end
       end
-      log_message("Floodgate: the least score %d (%d per game) [%s]" % [min_score, min_score/players.size*2, scores.join(" ")])
+      sorted = scores.sort
+      median = sorted[sorted.size / 2]
+      log_message("Floodgate: the least score %d (%d per game) " \
+                  "[min=%d median=%d max=%d count=%d]" %
+                  [min_score, min_score/players.size*2,
+                   sorted.first, median, sorted.last, sorted.size])
 
       players.replace(matches[min_index])
     end

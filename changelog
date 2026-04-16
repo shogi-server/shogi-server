@@ -1,3 +1,80 @@
+2026-04-16  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
+
+	* [shogi-server] Switch from require to require_relative for local
+	  files. Remove $:.unshift load-path manipulation from entry-point
+	  scripts and test files. showgame/ is not yet converted.
+	* [shogi_server/config] Add missing require 'yaml'.
+	* [pairing] Log a summary (min/median/max/count) of LeastDiff
+	  pairing scores instead of every individual score. With 7
+	  players the old format wrote 5040 scores on a single line.
+
+2026-04-13  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
+
+	* [test] Guard against double-starting the reader thread in SocketPlayer.
+	  reader() now raises if the thread is already alive, preventing silent
+	  re-entry. Remove the now-redundant reader()+sleep(0.1) calls that
+	  preceded every login() in TC_fork; login() starts the reader itself,
+	  so the explicit call was unnecessary.
+	* [Dockerfile] Update base image to Debian Trixie (13).
+	  Switch from debian:stretch-slim (EOL) to debian:trixie-slim.
+	  Ruby and ruby-gsl are now installed from apt, ensuring ABI
+	  compatibility. bundler and rgl are also installed.
+	* Ruby 3 compatibility. The server now requires Ruby 3.2 or
+	  later. A Gemfile is provided; run `bundle install` before
+	  starting the server.
+	* [shogi-server] WEBrick is now a gem dependency.
+	  WEBrick was removed from the Ruby standard library in Ruby 3.0
+	  and must be installed separately. The provided Gemfile covers
+	  this.
+	* [shogi-server] Use YAML.unsafe_load for Psych 4 compatibility.
+	  Ruby 3.1 ships Psych 4, which changed YAML.load to safe_load
+	  semantics. Server-internal YAML files that contain Time values
+	  now use YAML.unsafe_load explicitly.
+	* [shogi-server] Replace deprecated File.exists? with File.exist?
+	* [shogi-server] Restore client.sync = true.
+	  WEBrick no longer sets this automatically, so it must be set
+	  explicitly to ensure unbuffered I/O on each client connection.
+	* [mk_html] Pass ERB.new trim_mode as a keyword argument.
+	* [test] Stop reader thread before closing socket in SocketPlayer#close
+	  and #logout. On Linux, closing a socket does not unblock a thread
+	  waiting in select(2), causing a 10-second timeout.
+	* [test] Fix intermittent timing failures in TC_fork. Replace fixed
+	  sleep() calls with wait() polling in parse_game_name and in
+	  test_wrong_game, test_too_short_fork, and test_fork2. A slow Docker
+	  host could cause parse_game_name to return nil before the LIST
+	  response arrived, sending a malformed FORK command that produced the
+	  wrong error message.
+	* [shogi_server/config] Fix ERB evaluation of shogi-server.yaml.
+	  The closing parenthesis of ERB.new() was misplaced, causing .result
+	  to be called on the String returned by IO.read rather than on the ERB
+	  object. The config file feature would have raised NoMethodError if
+	  shogi-server.yaml existed.
+	* [shogi_server/compatible] Remove Ruby 1.8.7 compatibility shim.
+	  The Array#sample polyfill is dead code on Ruby >= 3.2; removed it
+	  along with its require in shogi_server.rb.
+	* [shogi_server, mk_game_results] Remove dead RUBY_VERSION guards.
+	  Branches conditioned on RUBY_VERSION < "2.2.0" and < "1.9.1" are
+	  never taken on Ruby >= 3.2 and have been removed.
+	* [pairing] Fix intermittent failure in LeastDiff#match for small
+	  player counts. For 7 or fewer players, enumerate all permutations
+	  exhaustively instead of relying on random sampling; random sampling
+	  with only 10 trials had a ~1.7% chance per run of missing the
+	  optimal pairing when the player count was odd (e.g. 3 players).
+	  Added test_match_seven_players to cover the 7-player case.
+	* [utils/players_graph] Replace removed FileTest.exists? with exist?.
+	  FileTest.exists? was removed in Ruby 3.2.
+	* [utils] Replace eval-based $OPT_* option parsing with a $options hash.
+	  All five utility scripts (csa-filter, correct-bug14635, eval_graph,
+	  players_graph, statistics) used eval to set global $OPT_* variables
+	  from command-line arguments. A single-quote in any argument value would
+	  break the eval with a SyntaxError. Replaced with a plain hash.
+	* [shogi_server/player] Fix invalid escape sequence "\m" in eol default.
+	  "\m" is not a recognised escape sequence and resolves to "m". Changed
+	  to "\n". The default is unreachable in practice (the login loop always
+	  provides the eol argument), so there is no behaviour change.
+	* [utils/correct-bug14635] Remove no-op $KCODE="e" assignment.
+	  $KCODE has been ignored since Ruby 1.9.
+
 2020-12-06  Daigo Moriwaki <daigo at debian dot org>
 
 	* [shogi-server] Improve timed-up detection (continued).

@@ -30,10 +30,16 @@ class SocketPlayer
   end
 
   def close
+    # Kill the reader thread before closing the socket. On Linux, closing a
+    # socket from one thread does not wake up another thread blocked in
+    # select(2) on that fd, so without this the reader waits the full 10-second
+    # timeout and then raises "timed out".
+    stop_reader
     @socket.close if @socket && !@socket.closed?
   end
 
   def reader
+    raise "reader already running" if @thread && @thread.alive?
     @thread = Thread.new do
       begin
         Thread.pass
@@ -128,6 +134,9 @@ class SocketPlayer
 
   def logout
     @socket.puts "LOGOUT"
+    # Same as close: stop the reader thread before closing the socket so it
+    # does not wait the full 10-second select(2) timeout on Linux.
+    stop_reader
     @socket.close
   end
 

@@ -1,9 +1,7 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
-
 require 'test/unit'
-require 'shogi_server'
-require 'shogi_server/board'
-require 'shogi_server/piece'
+require_relative '../shogi_server'
+require_relative '../shogi_server/board'
+require_relative '../shogi_server/piece'
 
 class TestUsi < Test::Unit::TestCase
   def setup
