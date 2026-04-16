@@ -1,5 +1,5 @@
 FROM debian:trixie-slim
-LABEL maintainer="Daigo Moriwaki <daigo@debian.org>"
+LABEL maintainer="Daigo Moriwaki <101983+daigo@users.noreply.github.com>"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
         ca-certificates \

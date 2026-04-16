@@ -7,8 +7,8 @@
 # * Gnuplot:  http://www.gnuplot.info/
 #   * On Debian, $ sudo apt-get install gnuplot
 #
-# Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2006-2012 Daigo Moriwaki <daigo at debian dot org>
+# Author::    Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
+# Copyright:: Copyright (C) 2006-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # $Id$
 #

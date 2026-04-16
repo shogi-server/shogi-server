@@ -4,8 +4,8 @@
 #   $ ./csa-filter.rb --players gps-l,bonanza some_dir
 # you will see such files under the some_dir directory.
 #
-# Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2006-2017 Daigo Moriwaki <daigo at debian dot org>
+# Author::    Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
+# Copyright:: Copyright (C) 2006-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # $Id$
 #

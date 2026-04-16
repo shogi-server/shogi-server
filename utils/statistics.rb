@@ -9,8 +9,8 @@
 # Sample command line:
 #   $ ./statistics.rb /dev/shm/floodgate
 #
-# Author::    Daigo Moriwaki <daigo at debian dot org>
-# Copyright:: Copyright (C) 2009-2012 Daigo Moriwaki <daigo at debian dot org>
+# Author::    Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
+# Copyright:: Copyright (C) 2009-2026 Daigo Moriwaki (101983+daigo at users dot noreply dot github dot com)
 #
 # $Id$
 #
