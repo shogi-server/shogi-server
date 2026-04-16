@@ -1,8 +1,6 @@
-$:.unshift File.dirname(__FILE__)
-$:.unshift File.join(File.dirname(__FILE__), "..")
 $topdir = File.expand_path File.dirname(__FILE__)
-require "baseclient"
-require "shogi_server/buoy.rb"
+require_relative "baseclient"
+require_relative "../shogi_server/buoy"
 
 class TestFork < BaseClient
   def parse_game_name(player)

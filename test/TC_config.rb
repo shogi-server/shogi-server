@@ -1,7 +1,6 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
 $topdir = File.expand_path(File.dirname(__FILE__))
-require 'shogi_server/config'
+require_relative '../shogi_server/config'
 
 
 class TestHash < Test::Unit::TestCase

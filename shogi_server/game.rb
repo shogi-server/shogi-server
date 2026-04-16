@@ -17,10 +17,10 @@
 ## along with this program; if not, write to the Free Software
 ## Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-require 'shogi_server/league/floodgate'
-require 'shogi_server/game_result'
-require 'shogi_server/time_clock'
-require 'shogi_server/util'
+require_relative './league/floodgate'
+require_relative './game_result'
+require_relative './time_clock'
+require_relative './util'
 
 module ShogiServer # for a namespace
 

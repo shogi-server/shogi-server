@@ -1,13 +1,12 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 $topdir = File.expand_path File.dirname(__FILE__)
 require 'test/unit'
 require 'tempfile'
-require 'test/mock_game'
-require 'test/mock_log_message'
-require 'test/mock_player'
-require 'shogi_server/login'
-require 'shogi_server/player'
-require 'shogi_server/command'
+require_relative 'mock_game'
+require_relative 'mock_log_message'
+require_relative 'mock_player'
+require_relative '../shogi_server/login'
+require_relative '../shogi_server/player'
+require_relative '../shogi_server/command'
 
 
 class MockLeague

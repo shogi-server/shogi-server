@@ -1,11 +1,10 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
 require 'ostruct'
 $topdir = File.expand_path File.dirname(__FILE__)
-require 'shogi_server'
-require 'shogi_server/league/floodgate'
-require 'shogi_server/league/floodgate_thread'
-require 'test/mock_log_message'
+require_relative '../shogi_server'
+require_relative '../shogi_server/league/floodgate'
+require_relative '../shogi_server/league/floodgate_thread'
+require_relative 'mock_log_message'
 
 class MySetupFloodgate < ShogiServer::SetupFloodgate
   def initialize(game_names)

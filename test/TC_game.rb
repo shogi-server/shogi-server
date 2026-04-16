@@ -1,9 +1,8 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
-require 'test/mock_player'
-require 'shogi_server/board'
-require 'shogi_server/game'
-require 'shogi_server/player'
+require_relative 'mock_player'
+require_relative '../shogi_server/board'
+require_relative '../shogi_server/game'
+require_relative '../shogi_server/player'
 
 $options = {}
 $options["least-time-per-move"] = 1

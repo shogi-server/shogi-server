@@ -1,5 +1,5 @@
-require 'shogi_server'
-require 'shogi_server/league/floodgate'
+require_relative '../../shogi_server'
+require_relative './floodgate'
 
 module ShogiServer
 

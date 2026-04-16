@@ -30,8 +30,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 #++
 
-$:.unshift File.dirname(__FILE__)
-require 'csa-filter'
+require_relative 'csa-filter'
 require 'set'
 
 class Monthly

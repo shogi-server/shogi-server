@@ -1,4 +1,4 @@
-require 'shogi_server/util'
+require_relative '../util'
 require 'date'
 require 'thread'
 require 'ostruct'

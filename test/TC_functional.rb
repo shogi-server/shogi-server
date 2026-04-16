@@ -1,7 +1,6 @@
 # -*- coding: windows-31j -*-
-$:.unshift File.join(File.dirname(__FILE__), "..")
 $topdir = File.expand_path File.dirname(__FILE__)
-require "test/baseclient"
+require_relative "baseclient"
 require "kconv"
 
 class TestClientAtmark < BaseClient

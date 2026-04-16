@@ -1,8 +1,6 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
-
 require 'test/unit'
-require 'shogi_server'
-require 'shogi_server/game'
+require_relative '../shogi_server'
+require_relative '../shogi_server/game'
 
 $league = ShogiServer::League.new(File.dirname(__FILE__))
 $league.event = "TC_game_result"

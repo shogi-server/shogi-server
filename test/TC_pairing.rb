@@ -1,10 +1,9 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
-require 'shogi_server'
-require 'shogi_server/league.rb'
-require 'shogi_server/player'
-require 'shogi_server/pairing'
-require 'test/mock_log_message'
+require_relative '../shogi_server'
+require_relative '../shogi_server/league'
+require_relative '../shogi_server/player'
+require_relative '../shogi_server/pairing'
+require_relative 'mock_log_message'
 
 def same_pair?(a, b)
   unless a.size == 2 && b.size == 2

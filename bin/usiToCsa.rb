@@ -24,8 +24,7 @@
 #
 #
 
-$:.unshift(File.join(File.dirname(File.expand_path(__FILE__)), ".."))
-require 'shogi_server'
+require_relative '../shogi_server'
 require 'logger'
 require 'socket'
 

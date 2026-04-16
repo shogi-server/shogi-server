@@ -47,7 +47,7 @@
 #
 
 require 'ruby-prof'
-load 'shogi-server'
+load File.expand_path('shogi-server', __dir__)
 
 
 if ($0 == __FILE__)

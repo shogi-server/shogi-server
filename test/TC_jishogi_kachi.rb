@@ -1,6 +1,5 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 $topdir = File.expand_path File.dirname(__FILE__)
-require "test/baseclient"
+require_relative "baseclient"
 include Socket::Constants
 
 # This game has more thatn 256 moves.

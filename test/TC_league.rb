@@ -1,9 +1,8 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
 require 'fileutils'
-require 'shogi_server'
-require 'shogi_server/player'
-require 'shogi_server/league'
+require_relative '../shogi_server'
+require_relative '../shogi_server/player'
+require_relative '../shogi_server/league'
 
 class TestPersistent < Test::Unit::TestCase
   def setup

@@ -1,5 +1,4 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
-load 'mk_rate'
+load File.expand_path('../mk_rate', __dir__)
 require 'test/unit'
 
 class RatingTest < Test::Unit::TestCase

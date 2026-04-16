@@ -108,8 +108,7 @@
 #
 
 require 'pathname'
-$:.unshift(File.dirname(Pathname.new(__FILE__).realpath))
-require 'utils/csa-filter'
+require_relative 'utils/csa-filter'
 require 'yaml'
 require 'time'
 require 'getoptlong'

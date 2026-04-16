@@ -1,9 +1,8 @@
-$:.unshift File.join(File.dirname(__FILE__), "..")
 require 'test/unit'
-require 'shogi_server'
-require 'shogi_server/player'
-require 'shogi_server/login'
-require 'shogi_server/handicapped_boards'
+require_relative '../shogi_server'
+require_relative '../shogi_server/player'
+require_relative '../shogi_server/login'
+require_relative '../shogi_server/handicapped_boards'
 
 $options ||= {}
 
