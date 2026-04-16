@@ -4,6 +4,9 @@
 	  files. Remove $:.unshift load-path manipulation from entry-point
 	  scripts and test files. showgame/ is not yet converted.
 	* [shogi_server/config] Add missing require 'yaml'.
+	* [pairing] Log a summary (min/median/max/count) of LeastDiff
+	  pairing scores instead of every individual score. With 7
+	  players the old format wrote 5040 scores on a single line.
 
 2026-04-13  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
 
