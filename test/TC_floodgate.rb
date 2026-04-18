@@ -5,7 +5,7 @@ require_relative '../shogi_server/pairing'
 require_relative '../shogi_server/league/floodgate'
 require_relative 'mock_log_message'
 
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 
 class SimplePlayer < ShogiServer::BasicPlayer
   attr_accessor :status

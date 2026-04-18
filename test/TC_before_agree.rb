@@ -1,4 +1,4 @@
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 require_relative "baseclient"
 require "kconv"
 
