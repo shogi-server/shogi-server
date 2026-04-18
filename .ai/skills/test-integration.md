@@ -14,7 +14,13 @@ description: |
 license: MIT
 compatibility: claude-code
 allowed-tools:
-  - Bash
+  - Bash(ruby -e "require 'socket'*)
+  - Bash(./shogi-server*)
+  - Bash(pkill -f 'shogi-server*)
+  - Bash(sleep *)
+  - Bash(cd */test && ruby TC_ALL*)
+  - Bash(ruby TC_ALL.rb*)
+  - Bash(ruby TC_ALL_no_max_moves.rb*)
   - Read
   - Edit
   - Write
@@ -79,7 +85,11 @@ pkill -f 'shogi-server.*4000' 2>/dev/null; sleep 1
    - Start the Phase 2 server (see Setup above).
    - Reset the consecutive-pass counter to 0.
    - Run Phase 2 with the same pass/fail logic.
-8. When Phase 2 reaches 5 consecutive passes, stop.
+8. When Phase 2 reaches 5 consecutive passes, kill the server and stop.
+
+```bash
+pkill -f 'shogi-server.*4000' 2>/dev/null; true
+```
 
 ## Diagnosing failures
 
