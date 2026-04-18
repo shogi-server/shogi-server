@@ -1,5 +1,16 @@
 2026-04-18  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
 
+	* [test] Run each test file in its own Ruby interpreter.
+	  TC_ALL.rb used require_relative to load every TC_*.rb into a
+	  single process; globals, constants, and sockets leaked between
+	  files and caused ordering-dependent flakes. TC_ALL.rb and
+	  TC_ALL_no_max_moves.rb now spawn a fresh `ruby` subprocess per
+	  file, aggregate pass/fail, and exit non-zero on any failure.
+	* [test] Include TC_max_moves_draw.rb in TC_ALL_no_max_moves.rb;
+	  it also needs --max-moves 0 and was previously unreferenced.
+
+2026-04-18  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
+
 	* [test] Add TC_ALL_no_max_moves.rb for tests that need
 	  --max-moves 0. TC_jishogi_kachi plays a game exceeding 256
 	  moves and was excluded from TC_ALL.rb; it now runs in the
