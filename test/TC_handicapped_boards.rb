@@ -2,6 +2,9 @@ require 'test/unit'
 require_relative '../shogi_server'
 require_relative '../shogi_server/handicapped_boards'
 
+require_relative 'test_setup'
+$options["max-identifier"] ||= ShogiServer::Default_Max_Identifier_Length
+
 class TestHandicappedGameName < Test::Unit::TestCase
 
   def test_hclance

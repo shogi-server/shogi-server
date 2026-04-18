@@ -1,3 +1,4 @@
+require_relative 'test_setup'
 require_relative '../shogi_server/player'
 
 class MockPlayer < ShogiServer::BasicPlayer

@@ -4,7 +4,7 @@ require_relative '../shogi_server/player'
 require_relative '../shogi_server/login'
 require_relative '../shogi_server/handicapped_boards'
 
-$options ||= {}
+require_relative 'test_setup'
 
 class ShogiServer::BasicPlayer
   attr_accessor :protocol

@@ -1,4 +1,4 @@
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 require 'test/unit'
 require_relative '../shogi_server/util'
 

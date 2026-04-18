@@ -1,9 +1,9 @@
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 require_relative "baseclient"
 include Socket::Constants
 
-# This game has more thatn 256 moves.
-# Disableing max-moves, "./shogi-server --max moves 0", is required.
+# This game reaches exactly 256 moves, triggering the server's #MAX_MOVES draw.
+# Requires the default server (--max-moves 256); do NOT run with --max-moves 0.
 
 class MaxMovesTest < ReadFileClient
   def test_max_moves_draw

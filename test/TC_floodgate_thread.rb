@@ -1,6 +1,6 @@
 require 'test/unit'
 require 'ostruct'
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 require_relative '../shogi_server'
 require_relative '../shogi_server/league/floodgate'
 require_relative '../shogi_server/league/floodgate_thread'

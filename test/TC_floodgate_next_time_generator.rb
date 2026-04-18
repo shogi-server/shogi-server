@@ -5,7 +5,7 @@ require_relative '../shogi_server/league/floodgate'
 require 'fileutils'
 require_relative 'mock_log_message'
 
-$topdir = File.expand_path File.dirname(__FILE__)
+require_relative 'test_setup'
 
 class TestNextTimeGenerator < Test::Unit::TestCase
   def setup
