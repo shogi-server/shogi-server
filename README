@@ -6,7 +6,7 @@ The Shogi-server project develops Shogi-server, a rating tool and so on.
 
 Shogi-server is a server that implements the Server Protocol Ver 1.2.1 defined
 by Computer Shogi Association (CSA[http://www.computer-shogi.org/index_e.html]) 
-in order for computer shogi players to play games.   
+for computer shogi programs to play games.   
 
 === Pre-requires
 
@@ -59,6 +59,13 @@ Run test cases
 
   $ cd test
   $ ruby TC_ALL.rb
+
+Some tests (e.g. jishogi_kachi) require the server to run with --max-moves 0
+because the games exceed the default 256-move limit.
+
+  $ ./shogi-server --max-moves 0 hoge 4000
+  $ cd test
+  $ ruby TC_ALL_no_max_moves.rb
 
 Tested:
 

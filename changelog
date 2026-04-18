@@ -1,3 +1,11 @@
+2026-04-18  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
+
+	* [test] Add TC_ALL_no_max_moves.rb for tests that need
+	  --max-moves 0. TC_jishogi_kachi plays a game exceeding 256
+	  moves and was excluded from TC_ALL.rb; it now runs in the
+	  separate suite.
+	* [Makefile] Add test-run-no-max-moves target.
+
 2026-04-16  Daigo Moriwaki <101983+daigo@users.noreply.github.com>
 
 	* [shogi-server] Switch from require to require_relative for local

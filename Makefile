@@ -8,6 +8,9 @@ doc: clean
 test-run:
 	./shogi-server --floodgate-games floodgate-600-10,floodgate-3600-0 hoge 4000
 
+.PHONY: test-run-no-max-moves
+test-run-no-max-moves:
+	./shogi-server --floodgate-games floodgate-600-10,floodgate-3600-0 --max-moves 0 hoge 4000
 
 .PHONY: test-run-daemon
 test-run-daemon:
