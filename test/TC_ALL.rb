@@ -20,6 +20,7 @@ TEST_FILES = %w[
   TC_game_least_0.rb
   TC_game_result.rb
   TC_handicapped_boards.rb
+  TC_max_moves_draw.rb
   TC_league.rb
   TC_logger.rb
   TC_login.rb

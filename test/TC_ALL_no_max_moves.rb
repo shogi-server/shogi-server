@@ -10,7 +10,6 @@ require 'rbconfig'
 
 TEST_FILES = %w[
   TC_jishogi_kachi.rb
-  TC_max_moves_draw.rb
 ]
 
 dir = __dir__
