@@ -1,10 +1,12 @@
 .image-*
 *.log
 *.local.json
+.idea/
+.vscode/
 /*.conf
 /*.yaml
 /*.txt
-/logs
+/logs/
 /00LIST*
-/2026
-/test/2026
+/2026/
+/test/2026/
